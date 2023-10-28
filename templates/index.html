@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы валют{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="number">Сумма в рублях</label>
+        <input type="number" name="number"
+            placeholder="1000"
+            value="{{ request.form['number'] }}"></input>
+        <button type="submit">Посчитать</button>
+    </form>
+    {% if request.method == 'POST' %}
+    <br>
+    <h2>На эту сумму можно приобрести</h2>
+    <table>
+        {% for rate in rates %}
+            <tr>
+                <td>{{ rate['Name'] }}:</td>
+                <td><strong>{{ rate['Sum'] }}</strong> по курсу {{ rate['Value'] }} рублей за единицу</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
