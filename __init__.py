@@ -1,5 +1,5 @@
 from flask import abort, Flask, render_template, request
-from . import rates
+from . import search
 
 # Инициализация приложения
 app = Flask(__name__)
@@ -21,20 +21,12 @@ def index():
 
         # Запрашиваем актуальные курсы валют
         try:
-            result = rates.target_rates_for_today()
+            result = search.search_in_spreadsheet(number)
         except:
             abort(500)
 
-        for entry in result:
-            sum = number / float(entry['Value'].replace(',', '.'))
-            entry['Sum'] = '{0:.4f}'.format(sum).replace('.', ',')
-
-    # Передаём курсы в нашу программу
-    return render_template('index.html', rates=result)
-
-@app.route("/about")
-def about():
-    return render_template('about.html')
+    # Передаём результаты поиска в нашу программу
+    return render_template('index.html', result=result)
 
 @app.errorhandler(500)
 def error_connecting_to_rates(e):

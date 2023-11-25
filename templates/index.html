@@ -1,23 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}Курсы валют{% endblock %}
+{% block title %}PriseScan{% endblock %}
 
 {% block content %}
     <form method="post">
-        <label for="number">Сумма в рублях</label>
+        <label for="number">Артикул товара</label>
         <input type="number" name="number"
-            placeholder="1000"
+            placeholder=""
             value="{{ request.form['number'] }}"></input>
-        <button type="submit">Посчитать</button>
+        <button type="submit">Узнать цену</button>
     </form>
     {% if request.method == 'POST' %}
     <br>
-    <h2>На эту сумму можно приобрести</h2>
+    {{ result }}
+    <h2>Результаты поиска</h2>
     <table>
-        {% for rate in rates %}
+        <tr>
+            <td>
+                <h3>{{ result['id'] }}</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>{{ result['name'] }}</h3>
+            </td>
+        </tr>
+        {% for item in result['shops'] %}
             <tr>
-                <td>{{ rate['Name'] }}:</td>
-                <td><strong>{{ rate['Sum'] }}</strong> по курсу {{ rate['Value'] }} рублей за единицу</td>
+                <td>{{ item['name'] }}:</td>
+                <td><strong>{{ item["price"] }}</strong> {{ item['Value'] }} рублей за штуку</td>
             </tr>
         {% endfor %}
     </table>
