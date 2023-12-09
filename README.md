@@ -15,6 +15,13 @@
 python -m pip install flask
 ```
 
+3. Устанавливаем гугловские зависимости через `pip`:
+
+```
+python3 -m pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+
+
 # Запуск
 
 Находясь в директории проекта выполнить (использование `.` после `--app` означает текущую папку):
