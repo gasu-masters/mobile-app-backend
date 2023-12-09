@@ -1,8 +1,5 @@
-import os.path
+import os
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -14,28 +11,6 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 SAMPLE_SPREADSHEET_ID = "1wYvGoWYuiaWkIC05484NKLoNIDgXX-ENf0jGHaCM-3Y"
 SAMPLE_RANGE_NAME = "A2:A"
 
-def authorize():
-  creds = None
-  # Файл token.json хранит токены доступа конкретного пользователя, этот файл
-  # создаётся автоматически при первом запуске в случае успешной авторизации
-  if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-  # Если файла с ключами доступа нет, запрашиваем авторизацию
-  if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-      creds.refresh(Request())
-    else:
-      flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
-      )
-      creds = flow.run_local_server(port=0)
-    # Сохраняем токены в файл, чтобы повторно не спрашивать
-    with open("token.json", "w") as token:
-      token.write(creds.to_json())
-
-  return creds
-
-
 def search_in_spreadsheet(number):
   # return {
   #   "id": int(number),
@@ -46,11 +21,11 @@ def search_in_spreadsheet(number):
   #   ]
   # }
 
-  creds = authorize()
+  os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
 
   try:
     # Инициализируем клиент для доступа к API
-    service = build("sheets", "v4", credentials=creds)
+    service = build("sheets", "v4")
 
     # Отправляем запрос к Sheets API
     sheet = service.spreadsheets()

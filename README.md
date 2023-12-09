@@ -18,9 +18,12 @@ python -m pip install flask
 3. Устанавливаем гугловские зависимости через `pip`:
 
 ```
-python3 -m pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+python3 -m pip install --upgrade google-api-python-client google-auth-httplib2
 ```
 
+# Ключи доступа
+
+Скачать ключ доступа по секретной ссылке и сохранить полученный файл в папке проекта под именем `credentials.json`.
 
 # Запуск
 
