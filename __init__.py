@@ -10,22 +10,21 @@ app = Flask(__name__)
 def index():
     result = []
 
-    # Выводим введённый пользователем номер в консоль
     if request.method == 'POST':
         number = request.form['number']
+        # Выводим введённый пользователем номер в консоль
+        print(number)
 
         if number is None or number == '':
             abort(400)
 
-        number = float(number)
-
-        # Запрашиваем актуальные курсы валют
+        # Ищем номер в таблице
         try:
             result = search.search_in_spreadsheet(number)
         except:
             abort(500)
 
-    # Передаём результаты поиска в нашу программу
+    # Выводим результаты поиска на экран
     return render_template('index.html', result=result)
 
 @app.errorhandler(500)
