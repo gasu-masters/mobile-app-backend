@@ -3,8 +3,7 @@ import os
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# Уровни доступа, которые наше приложение запрашивает.
-# Если нужны какие-то другие, необходимо удалить файл token.json
+# Уровни доступа, которые наше приложение запрашивает
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 # Идентификатор таблицы и диапазон поиска
