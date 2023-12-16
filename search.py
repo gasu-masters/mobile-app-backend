@@ -8,7 +8,8 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 # Идентификатор таблицы и диапазон поиска
 SAMPLE_SPREADSHEET_ID = "1wYvGoWYuiaWkIC05484NKLoNIDgXX-ENf0jGHaCM-3Y"
-SAMPLE_RANGE_NAME = "A2:A"
+SAMPLE_RANGE_NAME = "A2:G"
+SHOP_NAMES_RANGE="C1:G1"
 
 def search_in_spreadsheet(number):
   # return {
@@ -33,6 +34,7 @@ def search_in_spreadsheet(number):
         .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
         .execute()
     )
+    found_row = None
 
     # Результат запроса: массив строк из таблицы
     values = result.get("values", [])
@@ -42,11 +44,21 @@ def search_in_spreadsheet(number):
       return
 
     for row in values:
-      # print(row[0])
-      # print(number)
-
       if row[0] == number:
-        print('Совпадение!')
+        print(row)
+        found_row = {
+          "id": int(number),
+          "name": row[1],
+          "shops": [
+            { "name": "Магнит", "price": float(row[2]) },
+            { "name": "Пятерочка", "price": float(row[3]) },
+            { "name": "Аникс", "price": float(row[4]) },
+            { "name": "Мария-РА", "price": float(row[5]) },
+            { "name": "Fix Price", "price": float(row[6]) }
+          ]
+        }
+
+    return found_row
 
   except HttpError as err:
     print(err)

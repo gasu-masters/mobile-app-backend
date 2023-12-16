@@ -12,25 +12,19 @@
     </form>
     {% if request.method == 'POST' %}
     <br>
-    {{ result }}
+    
     <h2>Результаты поиска</h2>
+    {{ result}}
     <table>
-        <tr>
-            <td>
-                <h3>{{ result['id'] }}</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>{{ result['name'] }}</h3>
-            </td>
-        </tr>
-        {% for item in result['shops'] %}
+        {% for row in values %}
+        
             <tr>
-                <td>{{ item['name'] }}:</td>
-                <td><strong>{{ item["price"] }}</strong> {{ item['Value'] }} рублей за штуку</td>
+                <td>{{ row['1'] }}</td>
+                
             </tr>
+           
         {% endfor %}
+        
     </table>
     {% endif %}
 {% endblock %}
