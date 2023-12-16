@@ -12,15 +12,6 @@ SAMPLE_RANGE_NAME = "A2:G"
 SHOP_NAMES_RANGE="C1:G1"
 
 def search_in_spreadsheet(number):
-  # return {
-  #   "id": int(number),
-  #   "name": "Батончик",
-  #   "shops": [
-  #     { "name": "Аникс", "price": 88.30 },
-  #     { "name": "Мария", "price": 45.34 }
-  #   ]
-  # }
-
   os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
 
   try:
@@ -41,11 +32,10 @@ def search_in_spreadsheet(number):
 
     if not values:
       print("Ничего не найдено в таблице.")
-      return
+      return None
 
     for row in values:
       if row[0] == number:
-        print(row)
         found_row = {
           "id": int(number),
           "name": row[1],
