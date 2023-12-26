@@ -1,5 +1,8 @@
-from flask import abort, Flask, render_template, request
+from flask import abort, Flask, json
 from . import search
+
+# Отключаем экранирование юникодных символов
+json.provider.DefaultJSONProvider.ensure_ascii=False
 
 # Инициализация приложения
 app = Flask(__name__)
@@ -16,7 +19,6 @@ def index(number = None):
     # Ищем номер в таблице
     try:
         result = search.search_in_spreadsheet(number)
-        print(result)
 
         if result is None:
             abort(404)
